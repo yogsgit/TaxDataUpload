@@ -1,0 +1,91 @@
+﻿@model IEnumerable<TaxDataUpload.Models.TransactionData>
+
+@{
+    ViewBag.Title = "Tax Data Upload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery.blockUI.js"></script>
+<h2>Tax Data Upload</h2>
+
+@using (Html.BeginForm("Index", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <label for="file">Upload tax data in .xlsx or .csv format</label>
+    <br><br>
+    <input type="file" name="file" id="file" style="width:250px"/><br><br>
+    <input type="submit" value="Upload" id="submit"/>
+    <br><br>
+}
+@if (Convert.ToBoolean(ViewBag.IsPost))
+{
+    <p><label class="alert-warning">File name: @ViewBag.FileName </label></p>
+    if (ViewBag.Error.ToString().StartsWith("Error"))
+    {
+        <p><label class="alert-danger">@ViewBag.Error.ToString() </label></p>
+    }
+    else
+    {
+        <p><label class="alert-success">Tax data file has been processed successfully.</label></p>
+        <p><label>Total records @ViewBag.TotalRecords </label></p>
+        <p><label>Records saved: @ViewBag.TotalSaved</label></p>
+        <p><label>Records rejected: @ViewBag.TotalFailed</label></p>
+
+        if (ViewBag.TotalFailed.ToString() != "0")
+        {
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Account)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CurrencyCode)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Errors)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Account)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CurrencyCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AmountString)
+            </td>
+            <td>
+                @foreach (var msg in item.Errors)
+                {
+                    <p>@Html.DisplayFor(m => msg)</p>
+                }
+            </td>
+        </tr>
+    }
+    </table>
+        }
+    }
+}
+<div id="domMessage" style="display:none;">
+    <h3>We are uploading your tax data. Please be patient. We validate every value to make sure that only correct data gets uploaded.</h3>
+</div> 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#submit').click(function () {
+            $.blockUI({ message: $('#domMessage') });
+        });
+     });
+</script>

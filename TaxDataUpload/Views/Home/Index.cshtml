@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Tax Data Upload</h1>
+    <p class="lead">Upload tax data using .xlsx and .csv files.</p>
+    <p><a href="/Upload/Index" class="btn btn-primary btn-lg">Upload Tax Data</a></p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>.xlsx</h2>
+        <p>
+            Upload tax data using .xlsx Microsoft Excel files. The file requires to have only 4 columns - Account, Description, Currency Code, Amount. Upload high amount of data, quickly!
+        </p>
+    </div>
+    <div class="col-md-4">
+        <h2>.csv</h2>
+        <p>Upload tax data using .csv Comma Separated files. A file requires to have a header and rows with values for Account, Description, Currency Code, Amount. Upload high amount of data, quickly!</p>
+    </div>
+    <div class="col-md-4">
+        <h2>Transaction Data</h2>
+        <p>View the uploaded tax data in a paged format. Also, edit and delete your tax data.</p>
+        <p><a class="btn btn-default" href="/TransactionData/Index">Transaction Data</a></p>
+    </div>
+</div>
