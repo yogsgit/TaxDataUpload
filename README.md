@@ -48,6 +48,9 @@
 - *CacheHelper* is used to add the ISO 4217 data to the application cache during application start and to validate currency codes.
 - *TaxDataUploadDB* is the DB implementation using Entity Framework code first.
 - *Ninject* is used for dependency injection.
+- To keep the project structure simple, no separate projects have been made for different services like DB, etc.
+- Also, to make the file association clear all the related files have been kept in the same folder (e.g. DB folder has both, the
+  interface and the implementation class).
 - The database has 3 tables - *ISO4217Currency* (for ISO 4217 data), *TransactionDatas* (for uploaded data), *TaxDataFileDetails* (for
   input file name and upload datetime).
 - *TaxDataUpload.Tests* is the usit test project.
